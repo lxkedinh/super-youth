@@ -19,16 +19,26 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _login() async {
     try {
-      AuthenticationProvider authProvider = Provider.of<AuthenticationProvider>(
+      await Provider.of<AuthenticationProvider>(
         context,
         listen: false,
-      );
-      await authProvider.logIn(_emailController.text, _passwordController.text);
+      ).logIn(_emailController.text, _passwordController.text);
 
       if (mounted) {
         context.go('/home');
       }
-    } on FirebaseAuthException catch (e) {}
+    } on FirebaseAuthException catch (e) {
+      print(e.code);
+      if (e.code == 'user-not-found' && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('No user found for that email.')),
+        );
+      } else if (e.code == 'invalid-credential' && mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Invalid credentials.')));
+      }
+    }
   }
 
   @override
@@ -38,17 +48,59 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              Text("Login", style: TextStyle(fontSize: 40)),
-              TextFormField(),
-              TextButton(
-                onPressed: () {
-                  Provider.of<AuthenticationProvider>(context, listen: false);
-                },
-                child: Text("Go Home"),
-              ),
-            ],
+          child: Container(
+            margin: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              spacing: 20,
+              children: [
+                Text("Login", style: TextStyle(fontSize: 40)),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(labelText: 'Email'),
+                  validator: (String? email) {
+                    if (email == null ||
+                        !RegExp(
+                          r'^[\w\-.]+@([\w-]+\.)+[\w-]{2,}$',
+                        ).hasMatch(email)) {
+                      return 'Invalid email entered.';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  obscureText: true,
+                  controller: _passwordController,
+                  decoration: const InputDecoration(labelText: 'Password'),
+                  validator: (String? password) {
+                    if (password == null ||
+                        !RegExp(
+                          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$',
+                        ).hasMatch(password)) {
+                      return 'Password must have the following:\n'
+                          '- Minimum 8 characters long\n'
+                          '- 1 uppercase letter\n'
+                          '- 1 lowercase letter\n'
+                          '- 1 number\n'
+                          '- 1 special character';
+                    }
+                    return null;
+                  },
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      await _login();
+                    }
+                  },
+                  child: Text("Login"),
+                ),
+                ElevatedButton(
+                  onPressed: () => context.go('/signup'),
+                  child: Text('Sign Up'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
