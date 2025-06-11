@@ -1,4 +1,4 @@
-# sunny_chen_project
+# Super Youth
 
 A new Flutter project.
 
