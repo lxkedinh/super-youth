@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "414347331271",
+    "project_id": "sunny-chen-project",
+    "storage_bucket": "sunny-chen-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414347331271:android:b396a2570fe5399fc360e2",
+        "android_client_info": {
+          "package_name": "com.example.sunny_chen_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABBZqFZk1lF938UR5iO7n2p3mG7VvGxz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
