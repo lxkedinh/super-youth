@@ -28,7 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
         context.go('/home');
       }
     } on FirebaseAuthException catch (e) {
-      print(e.code);
       if (e.code == 'user-not-found' && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('No user found for that email.')),
@@ -49,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Form(
           key: _formKey,
           child: Container(
-            margin: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 40),
+            margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               spacing: 20,

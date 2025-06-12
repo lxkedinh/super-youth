@@ -8,7 +8,10 @@ final appRouter = GoRouter(
   initialLocation: '/',
   routes: [
     GoRoute(path: '/', builder: (context, state) => SplashScreen()),
-    GoRoute(path: '/home', builder: (context, state) => HomePage()),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => MyHomePage(title: 'Super Youth'),
+    ),
     GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
     GoRoute(path: '/signup', builder: (context, state) => SignUpScreen()),
   ],

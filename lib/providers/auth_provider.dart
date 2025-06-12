@@ -20,7 +20,7 @@ class AuthenticationProvider extends ChangeNotifier {
 
   Future<void> signUp(String email, String password) async {
     try {
-      final credential = await _auth.createUserWithEmailAndPassword(
+      await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -31,10 +31,7 @@ class AuthenticationProvider extends ChangeNotifier {
 
   Future<void> logIn(String email, String password) async {
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
     } finally {
       notifyListeners();
     }

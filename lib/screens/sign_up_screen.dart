@@ -15,6 +15,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
   Future<void> _signUp() async {
@@ -40,7 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Form(
           key: _formKey,
           child: Container(
-            margin: EdgeInsetsGeometry.symmetric(horizontal: 40),
+            margin: EdgeInsets.symmetric(horizontal: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               spacing: 20,
@@ -55,6 +56,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           r'^[\w\-.]+@([\w-]+\.)+[\w-]{2,}$',
                         ).hasMatch(email)) {
                       return 'Invalid email entered.';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  obscureText: true,
+                  controller: _usernameController,
+                  decoration: const InputDecoration(labelText: 'Username'),
+                  validator: (String? username) {
+                    if (username == null ||
+                        username.length < 3 ||
+                        username.length > 20) {
+                      return 'Username must be between 3 and 20 characters long.';
                     }
                     return null;
                   },
