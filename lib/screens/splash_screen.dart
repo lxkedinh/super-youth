@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:sunny_chen_project/providers/auth_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,8 +12,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  User? _user;
-
   @override
   void initState() {
     super.initState();
@@ -29,11 +25,11 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     // get user from auth provider
-    _user = Provider.of<AuthenticationProvider>(context, listen: false).user;
+    User? currentUser = FirebaseAuth.instance.currentUser;
 
     // check if user has logged in before
     // move user to corresponding screen whether they are logged in or not
-    if (_user == null) {
+    if (currentUser == null) {
       context.go('/login');
     } else {
       context.go('/home');
