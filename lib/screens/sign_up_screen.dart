@@ -14,16 +14,19 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _usernameController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
   Future<void> _signUp() async {
     try {
-      await Provider.of<AuthenticationProvider>(
-        context,
-        listen: false,
-      ).signUp(_emailController.text, _passwordController.text);
+      await Provider.of<AuthenticationProvider>(context, listen: false).signUp(
+        name: _nameController.text,
+        username: _usernameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use' && mounted) {
         ScaffoldMessenger.of(
@@ -61,7 +64,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
                 TextFormField(
-                  obscureText: true,
                   controller: _usernameController,
                   decoration: const InputDecoration(labelText: 'Username'),
                   validator: (String? username) {
@@ -69,6 +71,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         username.length < 3 ||
                         username.length > 20) {
                       return 'Username must be between 3 and 20 characters long.';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(labelText: 'Full Name'),
+                  validator: (String? name) {
+                    if (name == null || name.isEmpty || name.length > 50) {
+                      return 'Username must be non-empty and less than 50 characters long.';
                     }
                     return null;
                   },
