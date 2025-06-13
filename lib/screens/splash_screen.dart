@@ -19,17 +19,25 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    _initializeApp();
+  }
+
+  Future<void> _initializeApp() async {
+    await Future.delayed(const Duration(seconds: 2));
+    if (!mounted) {
+      return;
+    }
+
     // get user from auth provider
     _user = Provider.of<AuthenticationProvider>(context, listen: false).user;
 
     // check if user has logged in before
+    // move user to corresponding screen whether they are logged in or not
     if (_user == null) {
       context.go('/login');
     } else {
       context.go('/home');
     }
-
-    // move user to corresponding screen whether they are logged in or not
   }
 
   @override
