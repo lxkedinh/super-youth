@@ -14,7 +14,8 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-  final _nameController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _usernameController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -22,7 +23,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> _signUp() async {
     try {
       await Provider.of<AuthenticationProvider>(context, listen: false).signUp(
-        name: _nameController.text,
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
         username: _usernameController.text,
         email: _emailController.text,
         password: _passwordController.text,
@@ -76,11 +78,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
                 TextFormField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Full Name'),
-                  validator: (String? name) {
-                    if (name == null || name.isEmpty || name.length > 50) {
-                      return 'Username must be non-empty and less than 50 characters long.';
+                  controller: _firstNameController,
+                  decoration: const InputDecoration(labelText: 'First Name'),
+                  validator: (String? firstName) {
+                    if (firstName == null ||
+                        firstName.isEmpty ||
+                        firstName.length > 20) {
+                      return 'First name must be non-empty and less than 20 characters long.';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _lastNameController,
+                  decoration: const InputDecoration(labelText: 'Last Name'),
+                  validator: (String? lastName) {
+                    if (lastName == null ||
+                        lastName.isEmpty ||
+                        lastName.length > 20) {
+                      return 'Last name must be non-empty and less than 20 characters long.';
                     }
                     return null;
                   },

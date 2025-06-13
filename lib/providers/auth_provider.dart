@@ -47,7 +47,8 @@ class AuthenticationProvider extends ChangeNotifier {
     required String email,
     required String password,
     required String username,
-    required String name,
+    required String firstName,
+    required String lastName,
   }) async {
     try {
       final userCredential = await _auth.createUserWithEmailAndPassword(
@@ -58,7 +59,8 @@ class AuthenticationProvider extends ChangeNotifier {
       await _db.collection('users').doc(userCredential.user!.uid).set({
         'email': email,
         'username': username,
-        'name': name,
+        'firstName': firstName,
+        'lastName': lastName,
         'createdAt': FieldValue.serverTimestamp(),
       });
     } finally {
@@ -77,5 +79,33 @@ class AuthenticationProvider extends ChangeNotifier {
   Future<void> signOut() async {
     await _auth.signOut();
     notifyListeners();
+  }
+
+  Future<void> updateProfile({
+    String? username,
+    String? firstName,
+    String? lastName,
+  }) async {
+    if (_user == null) {
+      return;
+    }
+
+    Map<String, dynamic> updatedProfile = {};
+    if (username != null) {
+      updatedProfile['username'] = username;
+    }
+    if (firstName != null) {
+      updatedProfile['firstName'] = firstName;
+    }
+    if (lastName != null) {
+      updatedProfile['lastName'] = lastName;
+    }
+
+    try {
+      await _db.collection('users').doc(_user!.uid).update(updatedProfile);
+      await loadUserData();
+    } finally {
+      notifyListeners();
+    }
   }
 }
