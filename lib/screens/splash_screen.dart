@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:sunny_chen_project/providers/auth_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -24,6 +26,11 @@ class _SplashScreenState extends State<SplashScreen> {
       return;
     }
 
+    final authProvider = Provider.of<AuthenticationProvider>(
+      context,
+      listen: false,
+    );
+
     // get user from auth provider
     User? currentUser = FirebaseAuth.instance.currentUser;
 
@@ -32,6 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (currentUser == null) {
       context.go('/login');
     } else {
+      authProvider.loadUserData();
       context.go('/home');
     }
   }
