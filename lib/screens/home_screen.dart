@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:sunny_chen_project/providers/auth_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,19 +20,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _name = "Luke";
-
-  void _changeName() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _name = "Sunny";
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -43,27 +33,40 @@ class _HomeScreenState extends State<HomeScreen> {
         // TRY THIS: Try changing the color here to a specific color (to
         // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
         // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text('Super Youth'),
+        actions: [
+          IconButton(
+            onPressed: () => context.go('/home/profile'),
+            icon: Icon(Icons.person_outline),
+          ),
+        ],
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Hello $_name"),
-            TextButton(onPressed: _changeName, child: Text("Change Name")),
-          ],
+        child: Container(
+          margin: EdgeInsetsGeometry.all(16),
+          child: Column(
+            spacing: 16,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Consumer<AuthenticationProvider>(
+                builder: (context, authProvider, _) {
+                  final name = authProvider.userData?['firstName'] ?? 'there';
+
+                  return Text(
+                    "Hello, $name!",
+                    style: Theme.of(context).textTheme.displayLarge,
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _changeName,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

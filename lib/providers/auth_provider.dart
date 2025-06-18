@@ -10,6 +10,8 @@ class AuthenticationProvider extends ChangeNotifier {
 
   User? get user => _user;
 
+  Map<String, dynamic>? get userData => _userData;
+
   AuthenticationProvider() {
     _auth.authStateChanges().listen((User? user) {
       _user = user;
