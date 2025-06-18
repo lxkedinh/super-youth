@@ -24,10 +24,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final brightness = View.of(context).platformDispatcher.platformBrightness;
+    TextTheme textTheme = createTextTheme(context, "Nunito", "Nunito");
+
+    MaterialTheme theme = MaterialTheme(textTheme);
+
     return MaterialApp.router(
       routerConfig: appRouter,
       title: 'Flutter Demo',
-      theme: AppTheme.lightTheme,
+      theme: brightness == Brightness.light ? theme.light() : theme.dark(),
     );
   }
 }
