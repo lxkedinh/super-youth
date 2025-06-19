@@ -53,6 +53,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               Text('Email: $_email'),
+              ElevatedButton(
+                onPressed: () async {
+                  await Provider.of<AuthenticationProvider>(
+                    context,
+                    listen: false,
+                  ).signOut();
+                  if (context.mounted) {
+                    context.go('/login');
+                  }
+                },
+                child: const Text('Sign Out'),
+              ),
             ],
           ),
         ),
