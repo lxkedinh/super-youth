@@ -39,7 +39,8 @@ class _SplashScreenState extends State<SplashScreen> {
     if (currentUser == null) {
       context.go('/login');
     } else {
-      authProvider.loadUserData();
+      await authProvider.loadUserData();
+      if (!mounted) return;
       context.go('/home');
     }
   }

@@ -19,10 +19,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _login() async {
     try {
-      await Provider.of<AuthenticationProvider>(
+      final authProvider = Provider.of<AuthenticationProvider>(
         context,
         listen: false,
-      ).logIn(_emailController.text, _passwordController.text);
+      );
+
+      await authProvider.logIn(_emailController.text, _passwordController.text);
 
       if (mounted) {
         context.go('/home');
