@@ -48,12 +48,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("")),
       body: Center(
-        child: Column(
-          spacing: 10,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text("Super Youth")],
+        child: Container(
+          margin: EdgeInsets.only(top: 250),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Image.asset('assets/images/logo.png', width: 300),
+              Text(
+                'Super Youth',
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
+            ],
+          ),
         ),
       ),
     );
