@@ -11,23 +11,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late String _firstName;
-  late String _lastName;
-  late String _email;
-
-  @override
-  void initState() {
-    super.initState();
-    final authProvider = Provider.of<AuthenticationProvider>(
-      context,
-      listen: false,
-    );
-    final userData = authProvider.userData;
-    _firstName = userData?['firstName'] ?? '';
-    _lastName = userData?['lastName'] ?? '';
-    _email = userData?['email'] ?? '';
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,32 +23,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Center(
         child: Container(
-          margin: EdgeInsetsGeometry.only(top: 40),
-          child: Column(
-            spacing: 40,
-            children: [
-              const Image(
-                image: AssetImage('assets/images/blank_avatar.webp'),
-                width: 100,
-              ),
-              Text(
-                'Hello $_firstName $_lastName!',
-                style: Theme.of(context).textTheme.headlineLarge,
-              ),
-              Text('Email: $_email'),
-              ElevatedButton(
-                onPressed: () async {
-                  await Provider.of<AuthenticationProvider>(
-                    context,
-                    listen: false,
-                  ).signOut();
-                  if (context.mounted) {
-                    context.go('/login');
-                  }
-                },
-                child: const Text('Sign Out'),
-              ),
-            ],
+          margin: EdgeInsets.only(top: 40),
+          child: Consumer<AuthenticationProvider>(
+            builder: (context, auth, _) {
+              String firstName = auth.userData?['firstName'];
+              String lastName = auth.userData?['lastName'];
+              String email = auth.userData?['email'];
+              String username = auth.userData?['username'];
+
+              return Column(
+                spacing: 20,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 40),
+                    child: Text(
+                      'Profile',
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                  ),
+                  const Image(
+                    image: AssetImage('assets/images/blank_avatar.webp'),
+                    width: 100,
+                  ),
+                  Text(
+                    '$firstName $lastName',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  Text(
+                    username,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  Text('Email: $email'),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await Provider.of<AuthenticationProvider>(
+                        context,
+                        listen: false,
+                      ).signOut();
+                      if (context.mounted) {
+                        context.go('/login');
+                      }
+                    },
+                    child: const Text('Sign Out'),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
