@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sunny_chen_project/providers/auth_provider.dart';
+import 'package:sunny_chen_project/services/ai_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,7 +48,13 @@ class _HomeScreenState extends State<HomeScreen> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Container(
-          margin: EdgeInsetsGeometry.all(16),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/home_screen_background.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          margin: EdgeInsets.all(16),
           child: Column(
             spacing: 16,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -57,10 +64,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   final name = authProvider.userData?['firstName'] ?? 'there';
 
                   return Text(
-                    "Hello, $name!",
+                    "Hello $name!",
                     style: Theme.of(context).textTheme.displayLarge,
                   );
                 },
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  AIService ai = AIService();
+                  await ai.generateContent(
+                    "identifying personal needs and values",
+                  );
+                },
+                child: const Text('Generate Content'),
               ),
             ],
           ),
