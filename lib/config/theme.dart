@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   // Color Scheme
-  static const primaryColor = Color(0xFF16F5DB);
+  static const primaryColor = Color(0xFFAA4405);
   static const secondaryColor = Color(0xFF03A9F4);
   static const accentColor = Color(0xFF00BCD4);
   static const backgroundColor = Color(0xFFF3792E);
@@ -11,7 +11,7 @@ class AppTheme {
   static const errorColor = Color(0xFF981E1E);
   static const successColor = Color(0xFF4CAF50);
   static const warningColor = Color(0xFFFFA000);
-  static const textColor = Color(0xFF00159C);
+  static const textColor = Colors.white;
 
   static ThemeData get lightTheme {
     return ThemeData(
@@ -22,13 +22,17 @@ class AppTheme {
         surface: surfaceColor,
         error: errorColor,
       ),
-      textTheme: GoogleFonts.nunitoTextTheme().apply(bodyColor: textColor),
+      textTheme: GoogleFonts.nunitoSansTextTheme().apply(
+        bodyColor: textColor,
+        displayColor: textColor,
+      ),
       appBarTheme: AppBarTheme(
+        iconTheme: const IconThemeData(color: textColor, size: 28),
         backgroundColor: backgroundColor,
         foregroundColor: Colors.black87,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: GoogleFonts.poppins(
+        titleTextStyle: GoogleFonts.nunitoSans(
           fontSize: 20,
           fontWeight: FontWeight.w600,
           color: textColor,
@@ -45,13 +49,14 @@ class AppTheme {
           foregroundColor: textColor,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          textStyle: GoogleFonts.poppins(
+          textStyle: GoogleFonts.nunitoSans(
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
+        filled: false,
         fillColor: surfaceColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -77,13 +82,13 @@ class AppTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: primaryColor,
-          textStyle: GoogleFonts.nunito(
+          textStyle: GoogleFonts.nunitoSans(
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
         ),
       ),
-      iconTheme: const IconThemeData(color: Colors.black87, size: 24),
+      iconTheme: const IconThemeData(color: textColor, size: 28),
       scaffoldBackgroundColor: backgroundColor,
     );
   }
