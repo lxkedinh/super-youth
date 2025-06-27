@@ -4,6 +4,7 @@ import 'package:sunny_chen_project/screens/login_screen.dart';
 import 'package:sunny_chen_project/screens/profile_screen.dart';
 import 'package:sunny_chen_project/screens/sign_up_screen.dart';
 import 'package:sunny_chen_project/screens/splash_screen.dart';
+import 'package:sunny_chen_project/screens/unit_screen.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -18,5 +19,15 @@ final appRouter = GoRouter(
     ),
     GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
     GoRoute(path: '/signup', builder: (context, state) => SignUpScreen()),
+    GoRoute(
+      path: '/unit/:id',
+      builder: (context, state) {
+        if (state.pathParameters['id'] == null) {
+          return HomeScreen();
+        } else {
+          return UnitScreen(id: int.parse(state.pathParameters['id']!));
+        }
+      },
+    ),
   ],
 );
