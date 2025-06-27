@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sunny_chen_project/providers/auth_provider.dart';
-import 'package:sunny_chen_project/services/ai_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -50,13 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/home_screen_background.png'),
+              image: AssetImage('assets/images/home_screen_background.png'),
               fit: BoxFit.cover,
             ),
           ),
-          margin: EdgeInsets.all(16),
           child: Column(
-            spacing: 16,
+            spacing: 24,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Consumer<AuthenticationProvider>(
@@ -69,14 +67,72 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  AIService ai = AIService();
-                  await ai.generateContent(
-                    "identifying personal needs and values",
-                  );
-                },
-                child: const Text('Generate Content'),
+              Text(
+                "Your Journey",
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
+              Text("Units", style: Theme.of(context).textTheme.displayMedium),
+              Align(
+                alignment: Alignment(0, 1),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "6",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment(0.5, 0),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "5",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment(0, 0),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "4",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment(-0.5, 0),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "3",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment(0, 0),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "2",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment(-0.5, 0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    context.push('/unit/1');
+                  },
+                  child: Text(
+                    "1",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                ),
               ),
             ],
           ),
