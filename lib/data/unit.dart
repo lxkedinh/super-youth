@@ -4,7 +4,17 @@ class Unit {
   String description;
   int numScenarios;
 
-  Unit(this.name, this.id, this.description, this.numScenarios);
+  // List<String> references;
+  // String youtubeLink;
+
+  Unit(
+    this.name,
+    this.id,
+    this.description,
+    // this.references,
+    // this.youtubeLink,
+    this.numScenarios,
+  );
 }
 
 final List<Unit> units = [
@@ -21,15 +31,27 @@ final List<Unit> units = [
     5,
   ),
   Unit(
-    "Active Listening",
-    "active-listening",
-    "Helping teens improve their communication through active listening",
+    "Conflict Resolution",
+    "conflict-resolution",
+    "Helping teens peacefully resolve conflicts with others",
     5,
   ),
   Unit(
-    "Active Listening",
-    "active-listening",
-    "Helping teens improve their communication through active listening",
-    5,
+    "Coping Skills",
+    "coping-skills",
+    "Helping teens develop healthy coping skills to manage stress and anxiety",
+    7,
+  ),
+  Unit(
+    "Maintaining relationships",
+    "maintaining-relationships",
+    "Helping teens maintain their relationships with friends and family as they grow up",
+    7,
+  ),
+  Unit(
+    "Financial Literacy",
+    "financial-literacy",
+    "Helping teens manage your personal finances",
+    7,
   ),
 ];
