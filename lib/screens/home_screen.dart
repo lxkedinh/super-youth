@@ -75,7 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Align(
                 alignment: Alignment(0, 1),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push('/unit/6');
+                  },
                   child: Text(
                     "6",
                     style: Theme.of(context).textTheme.displaySmall,
@@ -85,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Align(
                 alignment: Alignment(0.5, 0),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push('/unit/5');
+                  },
                   child: Text(
                     "5",
                     style: Theme.of(context).textTheme.displaySmall,
@@ -95,7 +99,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Align(
                 alignment: Alignment(0, 0),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push('/unit/4');
+                  },
                   child: Text(
                     "4",
                     style: Theme.of(context).textTheme.displaySmall,
@@ -105,7 +111,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Align(
                 alignment: Alignment(-0.5, 0),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push('/unit/3');
+                  },
                   child: Text(
                     "3",
                     style: Theme.of(context).textTheme.displaySmall,
@@ -115,7 +123,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Align(
                 alignment: Alignment(0, 0),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push('/unit/2');
+                  },
                   child: Text(
                     "2",
                     style: Theme.of(context).textTheme.displaySmall,
