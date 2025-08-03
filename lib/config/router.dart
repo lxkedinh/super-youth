@@ -29,7 +29,14 @@ final appRouter = GoRouter(
           return UnitScreen(id: int.parse(state.pathParameters['id']!));
         }
       },
-      routes: [GoRoute(path: 'try', builder: (context, state) => TryScreen())],
+      routes: [
+        GoRoute(
+          path: 'try',
+          builder:
+              (context, state) =>
+                  TryScreen(unitId: int.parse(state.pathParameters['id']!)),
+        ),
+      ],
     ),
   ],
 );

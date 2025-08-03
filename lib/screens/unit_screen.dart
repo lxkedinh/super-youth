@@ -11,6 +11,18 @@ class UnitScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Unit unit = units[id - 1];
 
+    List<Widget> actions = [];
+    if (unit.id != units.last.id) {
+      actions.add(
+        IconButton(
+          onPressed: () {
+            context.push("/unit/${id + 1}");
+          },
+          icon: Icon(Icons.arrow_forward),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Super Youth'),
@@ -18,9 +30,7 @@ class UnitScreen extends StatelessWidget {
           onPressed: () => context.pop(),
           icon: Icon(Icons.arrow_back),
         ),
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.arrow_forward)),
-        ],
+        actions: actions,
       ),
       body: Center(
         child: Container(
@@ -52,7 +62,9 @@ class UnitScreen extends StatelessWidget {
                 children: [
                   for (int i = 1; i <= unit.numScenarios; i++)
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.go("/unit/$id/try");
+                      },
                       child: Text(
                         "Scenario $i",
                         style: TextTheme.of(context).headlineSmall,
