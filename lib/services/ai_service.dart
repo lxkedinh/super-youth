@@ -26,7 +26,8 @@ class AIService {
           Map.of({
             "role": "user",
             "content":
-                "Generate a challenging social scenario about $unitTitle asking the user what they would do in that situation.",
+                "Generate a challenging social scenario about $unitTitle asking the user what they would do in that situation."
+                "Respond with only a paragraph of the social scenario.",
           }),
         ],
       );
@@ -34,8 +35,7 @@ class AIService {
       final response = await openAI.onChatCompletion(request: request);
       final message = response?.choices.first.message;
       if (message != null) {
-        print(message);
-        return Map.of({"response": message});
+        return Map.of({"response": message.content});
       } else {
         throw Exception('Error generating content: No response');
       }

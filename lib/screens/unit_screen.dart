@@ -63,7 +63,7 @@ class UnitScreen extends StatelessWidget {
                   for (int i = 1; i <= unit.numScenarios; i++)
                     ElevatedButton(
                       onPressed: () {
-                        context.go("/unit/$id/try");
+                        context.push("/unit/$id/try");
                       },
                       child: Text(
                         "Scenario $i",

@@ -38,7 +38,55 @@ class _TryScreenState extends State<TryScreen> {
             BuildContext context,
             AsyncSnapshot<Map<String, dynamic>> snapshot,
           ) {
-            return Text("");
+            if (snapshot.hasData) {
+              return Container(
+                margin: EdgeInsetsGeometry.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
+                ),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Text(
+                          snapshot.data!['response'],
+                          style: TextTheme.of(context).bodyLarge,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 400, child: TextField(maxLines: null)),
+                  ],
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Could not generate content. Try again.",
+                    style: TextTheme.of(context).bodyLarge?.apply(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 20,
+                children: [
+                  Text(
+                    "Generating content",
+                    style: TextTheme.of(context).displaySmall,
+                  ),
+                  SizedBox(
+                    width: 60,
+                    height: 60,
+                    child: CircularProgressIndicator(),
+                  ),
+                ],
+              );
+            }
           },
         ),
       ),
