@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -9,6 +11,53 @@ class AIService {
       token: dotenv.env['OPENAI_KEY'],
       baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 30)),
     );
+  }
+
+  Future<Map<String, dynamic>> generateFeedback({
+    required String scenario,
+    required String userResponse,
+  }) async {
+    try {
+      final request = ChatCompleteText(
+        messages: [
+          Map.of({
+            "role": "system",
+            "content":
+                "You are an expert in social skills and youth"
+                "development, providing detailed feedback on responses to social scenarios.",
+          }),
+          Map.of({
+            "role": "user",
+            "content": '''
+Analyze the following response to a social scenario:
+
+Scenario: $scenario
+User Response: $userResponse
+
+Refer to the user in the second person point of view and please provide feedback in the following JSON format:
+{
+  "score": (1-10 score based on appropriateness and effectiveness),
+  "comments": (detailed analysis of the response),
+  "strengths": [list of key strengths demonstrated],
+  "suggestions": [specific suggestions for improvement],
+  "nextSteps": [recommended actions for further development]
+}
+''',
+          }),
+        ],
+        maxToken: 1000,
+        model: Gpt4ChatModel(),
+      );
+
+      final chatResponse = await openAI.onChatCompletion(request: request);
+      if (chatResponse?.choices.first.message?.content != null) {
+        return jsonDecode(chatResponse!.choices.first.message!.content);
+      } else {
+        throw Exception('Failed to generate feedback: No response content');
+      }
+    } catch (e) {
+      throw Exception('Error generating feedback: $e');
+    }
   }
 
   Future<Map<String, dynamic>> generateContent(String unitTitle) async {
@@ -35,7 +84,7 @@ class AIService {
       final response = await openAI.onChatCompletion(request: request);
       final message = response?.choices.first.message;
       if (message != null) {
-        return Map.of({"response": message.content});
+        return Map.of({"scenario": message.content});
       } else {
         throw Exception('Error generating content: No response');
       }
