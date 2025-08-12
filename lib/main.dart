@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:sunny_chen_project/config/router.dart';
 import 'package:sunny_chen_project/config/theme.dart';
+import 'package:sunny_chen_project/providers/ai_provider.dart';
 import 'package:sunny_chen_project/providers/auth_provider.dart';
 
 import 'firebase_options.dart';
@@ -14,8 +15,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => AuthenticationProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AIProvider()),
+        ChangeNotifierProvider(create: (context) => AuthenticationProvider()),
+      ],
       child: const MyApp(),
     ),
   );
