@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:sunny_chen_project/screens/feedback_screen.dart';
 import 'package:sunny_chen_project/screens/home_screen.dart';
 import 'package:sunny_chen_project/screens/login_screen.dart';
 import 'package:sunny_chen_project/screens/profile_screen.dart';
@@ -35,6 +36,17 @@ final appRouter = GoRouter(
           builder:
               (context, state) =>
                   TryScreen(unitId: int.parse(state.pathParameters['id']!)),
+        ),
+        GoRoute(
+          path: 'feedback',
+          builder: (context, state) {
+            final Map<String, dynamic> data =
+                state.extra! as Map<String, dynamic>;
+            return FeedbackScreen(
+              scenario: data['scenario'],
+              response: data['response'],
+            );
+          },
         ),
       ],
     ),
