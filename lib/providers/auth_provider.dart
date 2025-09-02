@@ -110,4 +110,35 @@ class AuthenticationProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> deleteAccount() async {
+    if (_user == null) return;
+
+    try {
+      await _db.collection('users').doc(_user!.uid).delete();
+      await _user?.delete();
+    } finally {
+      notifyListeners();
+    }
+  }
+
+  Future<void> updateProgress({
+    required String scenario,
+    required String response,
+    required Map<String, dynamic> feedback,
+  }) async {
+    if (_user == null) return;
+
+    try {
+      await _db.collection('users').doc(_user!.uid).collection('progress').add({
+        'scenario': scenario,
+        'response': response,
+        'feedback': feedback,
+        'score': feedback['score'],
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+    } on Exception catch (e) {
+      print("Error updating user progress: $e");
+    }
+  }
 }

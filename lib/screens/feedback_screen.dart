@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sunny_chen_project/providers/ai_provider.dart';
+import 'package:sunny_chen_project/providers/auth_provider.dart';
 
 import '../data/unit.dart';
 import '../widgets/nav_drawer.dart';
@@ -30,10 +31,27 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   @override
   void initState() {
     super.initState();
-    data = Provider.of<AIProvider>(context, listen: false).generateFeedback(
-      scenario: widget.scenario,
-      userResponse: widget.userResponse,
+
+    final aiProvider = Provider.of<AIProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthenticationProvider>(
+      context,
+      listen: false,
     );
+
+    data = aiProvider
+        .generateFeedback(
+          scenario: widget.scenario,
+          userResponse: widget.userResponse,
+        )
+        .then((feedback) {
+          authProvider.updateProgress(
+            scenario: widget.scenario,
+            response: widget.userResponse,
+            feedback: feedback,
+          );
+
+          return feedback;
+        });
   }
 
   String _buildScoreMessage(int score) {

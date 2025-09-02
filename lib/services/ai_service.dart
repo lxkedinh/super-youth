@@ -36,7 +36,7 @@ User Response: $userResponse
 
 Refer to the user in the second person point of view and please provide feedback in the following JSON format:
 {
-  "score": (1-10 score based on appropriateness and effectiveness),
+  "score": (1-10 integer score based on appropriateness and effectiveness),
   "pros": "(array of strings of pros of the response in the second person perspective)",
   "cons": "(array of strings of cons of the response in the second person perspective)",
 }
