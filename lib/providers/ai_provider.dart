@@ -9,7 +9,7 @@ class AIProvider extends ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> generateContent(String unitTitle) async {
-    return await _ai.generateContent(unitTitle);
+    return _ai.generateContent(unitTitle);
   }
 
   Future<Map<String, dynamic>> generateFeedback({

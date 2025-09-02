@@ -37,10 +37,8 @@ User Response: $userResponse
 Refer to the user in the second person point of view and please provide feedback in the following JSON format:
 {
   "score": (1-10 score based on appropriateness and effectiveness),
-  "comments": (detailed analysis of the response),
-  "strengths": [list of key strengths demonstrated],
-  "suggestions": [specific suggestions for improvement],
-  "nextSteps": [recommended actions for further development]
+  "pros": "(array of strings of pros of the response in the second person perspective)",
+  "cons": "(array of strings of cons of the response in the second person perspective)",
 }
 ''',
           }),
@@ -49,9 +47,10 @@ Refer to the user in the second person point of view and please provide feedback
         model: Gpt4ChatModel(),
       );
 
-      final chatResponse = await openAI.onChatCompletion(request: request);
-      if (chatResponse?.choices.first.message?.content != null) {
-        return jsonDecode(chatResponse!.choices.first.message!.content);
+      final feedback = await openAI.onChatCompletion(request: request);
+      final message = feedback?.choices.first.message;
+      if (message != null) {
+        return jsonDecode(message.content);
       } else {
         throw Exception('Failed to generate feedback: No response content');
       }
