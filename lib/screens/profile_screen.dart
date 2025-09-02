@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sunny_chen_project/providers/auth_provider.dart';
+import 'package:sunny_chen_project/widgets/nav_drawer.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -14,13 +15,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Super Youth'),
-        leading: IconButton(
-          onPressed: () => context.pop(),
-          icon: Icon(Icons.arrow_back),
-        ),
-      ),
+      drawer: NavDrawer(),
+      appBar: AppBar(title: const Text('Super Youth')),
       body: Center(
         child: Container(
           margin: EdgeInsets.only(top: 40),

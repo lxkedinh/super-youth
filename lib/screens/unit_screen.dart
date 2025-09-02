@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sunny_chen_project/data/unit.dart';
+import 'package:sunny_chen_project/widgets/nav_drawer.dart';
 
 class UnitScreen extends StatelessWidget {
   final int id;
@@ -24,6 +25,7 @@ class UnitScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
         title: const Text('Super Youth'),
         leading: IconButton(
@@ -63,7 +65,7 @@ class UnitScreen extends StatelessWidget {
                   for (int i = 1; i <= unit.numScenarios; i++)
                     ElevatedButton(
                       onPressed: () {
-                        context.push("/unit/$id/try");
+                        context.push("/unit/$id/try/$i");
                       },
                       child: Text(
                         "Scenario $i",

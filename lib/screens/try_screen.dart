@@ -3,11 +3,17 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sunny_chen_project/data/unit.dart';
 import 'package:sunny_chen_project/providers/ai_provider.dart';
+import 'package:sunny_chen_project/widgets/nav_drawer.dart';
 
 class TryScreen extends StatefulWidget {
   final int unitId;
+  final int scenarioNumber;
 
-  const TryScreen({super.key, required this.unitId});
+  const TryScreen({
+    super.key,
+    required this.unitId,
+    required this.scenarioNumber,
+  });
 
   @override
   State<StatefulWidget> createState() => _TryScreenState();
@@ -16,38 +22,41 @@ class TryScreen extends StatefulWidget {
 class _TryScreenState extends State<TryScreen> {
   final _formKey = GlobalKey<FormState>();
   final _responseController = TextEditingController();
+  late Future<Map<String, dynamic>> scenarioData;
+
+  @override
+  void initState() {
+    super.initState();
+    scenarioData = Provider.of<AIProvider>(
+      context,
+      listen: false,
+    ).generateContent(units[widget.unitId - 1].name);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Super Youth'),
-        leading: IconButton(
-          onPressed: () => context.pop(),
-          icon: Icon(Icons.arrow_back),
-        ),
-      ),
+      drawer: NavDrawer(),
+      appBar: AppBar(title: const Text('Super Youth')),
       body: Center(
         child: FutureBuilder(
-          future: Provider.of<AIProvider>(
-            context,
-            listen: false,
-          ).generateContent(units[widget.unitId - 1].name),
+          future: scenarioData,
           builder: (
             BuildContext context,
             AsyncSnapshot<Map<String, dynamic>> snapshot,
           ) {
-            if (snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.done) {
               return Container(
-                margin: EdgeInsetsGeometry.symmetric(
-                  horizontal: 20,
-                  vertical: 20,
-                ),
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      Text(
+                        "Scenario ${widget.scenarioNumber}",
+                        style: TextTheme.of(context).displaySmall,
+                      ),
                       SingleChildScrollView(
                         child: Text(
                           snapshot.data!['scenario'],
@@ -65,7 +74,7 @@ class _TryScreenState extends State<TryScreen> {
                         ),
                         validator: (String? response) {
                           if (response == null || response.isEmpty) {
-                            return 'Response required.';
+                            return 'Please enter a response.';
                           }
                           return null;
                         },
@@ -73,11 +82,11 @@ class _TryScreenState extends State<TryScreen> {
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            context.push(
-                              '/unit/${widget.unitId}/feedback',
+                            context.go(
+                              '/unit/${widget.unitId}/feedback/${widget.scenarioNumber}',
                               extra: Map.of({
                                 'scenario': snapshot.data!['scenario'],
-                                'response': _responseController.text,
+                                'userResponse': _responseController.text,
                               }),
                             );
                           }

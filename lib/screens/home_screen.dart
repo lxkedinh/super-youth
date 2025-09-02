@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sunny_chen_project/providers/auth_provider.dart';
+import 'package:sunny_chen_project/widgets/nav_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
         // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
@@ -36,12 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text('Super Youth'),
-        actions: [
-          IconButton(
-            onPressed: () => context.go('/home/profile'),
-            icon: Icon(Icons.person_outline),
-          ),
-        ],
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it

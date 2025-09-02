@@ -26,6 +26,7 @@ class AppTheme {
         bodyColor: textColor,
         displayColor: textColor,
       ),
+      drawerTheme: DrawerThemeData(backgroundColor: primaryColor),
       appBarTheme: AppBarTheme(
         iconTheme: const IconThemeData(color: textColor, size: 28),
         backgroundColor: backgroundColor,
@@ -47,8 +48,11 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
           foregroundColor: textColor,
+          iconColor: textColor,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
           textStyle: GoogleFonts.nunitoSans(
             fontSize: 16,
             fontWeight: FontWeight.w500,
