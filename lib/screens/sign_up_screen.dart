@@ -136,10 +136,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Logging in!')),
-                      );
                       await _signUp();
+                      if (!context.mounted) return;
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Signed up successfully!'),
+                        ),
+                      );
+
+                      context.go('/login');
                     }
                   },
                   child: Text("Sign Up"),
