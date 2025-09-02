@@ -6,7 +6,7 @@ class AppTheme {
   static const primaryColor = Color(0xFFAA4405);
   static const secondaryColor = Color(0xFF03A9F4);
   static const accentColor = Color(0xFF00BCD4);
-  static const backgroundColor = Color(0xFFF3792E);
+  static const backgroundColor = Color(0xFFF0742A);
   static const surfaceColor = Colors.white;
   static const errorColor = Color(0xFF981E1E);
   static const successColor = Color(0xFF4CAF50);
@@ -29,7 +29,7 @@ class AppTheme {
       drawerTheme: DrawerThemeData(backgroundColor: primaryColor),
       appBarTheme: AppBarTheme(
         iconTheme: const IconThemeData(color: textColor, size: 28),
-        backgroundColor: backgroundColor,
+        backgroundColor: Colors.transparent,
         foregroundColor: Colors.black87,
         elevation: 0,
         centerTitle: true,
