@@ -22,29 +22,37 @@ final appRouter = GoRouter(
     GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
     GoRoute(path: '/signup', builder: (context, state) => SignUpScreen()),
     GoRoute(
-      path: '/unit/:id',
+      path: '/unit/:unitNumber',
       builder: (context, state) {
-        if (state.pathParameters['id'] == null) {
+        if (state.pathParameters['unitNumber'] == null) {
           return HomeScreen();
         } else {
-          return UnitScreen(id: int.parse(state.pathParameters['id']!));
+          return UnitScreen(id: int.parse(state.pathParameters['unitNumber']!));
         }
       },
       routes: [
         GoRoute(
-          path: 'try',
+          path: 'try/:scenarioNumber',
           builder:
-              (context, state) =>
-                  TryScreen(unitId: int.parse(state.pathParameters['id']!)),
+              (context, state) => TryScreen(
+                unitId: int.parse(state.pathParameters['unitNumber']!),
+                scenarioNumber: int.parse(
+                  state.pathParameters['scenarioNumber']!,
+                ),
+              ),
         ),
         GoRoute(
-          path: 'feedback',
+          path: 'feedback/:scenarioNumber',
           builder: (context, state) {
             final Map<String, dynamic> data =
                 state.extra! as Map<String, dynamic>;
             return FeedbackScreen(
+              unitNumber: int.parse(state.pathParameters['unitNumber']!),
               scenario: data['scenario'],
-              response: data['response'],
+              userResponse: data['userResponse'],
+              scenarioNumber: int.parse(
+                state.pathParameters['scenarioNumber']!,
+              ),
             );
           },
         ),
