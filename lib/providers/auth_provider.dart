@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../data/unit.dart';
+
 class AuthenticationProvider extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -124,6 +126,7 @@ class AuthenticationProvider extends ChangeNotifier {
 
   Future<void> updateProgress({
     required String scenario,
+    required int unitNumber,
     required String response,
     required Map<String, dynamic> feedback,
   }) async {
@@ -132,13 +135,52 @@ class AuthenticationProvider extends ChangeNotifier {
     try {
       await _db.collection('users').doc(_user!.uid).collection('progress').add({
         'scenario': scenario,
+        'unitNumber': unitNumber,
         'response': response,
         'feedback': feedback,
-        'score': feedback['score'],
         'timestamp': FieldValue.serverTimestamp(),
       });
     } on Exception catch (e) {
       print("Error updating user progress: $e");
+    }
+  }
+
+  Future<List<double>> getAverageScores() async {
+    if (_user == null) {
+      throw Exception("User not authenticated. Please log in");
+    }
+
+    try {
+      List<double> unitAvgScores = List.generate(units.length, (i) => 0);
+      List<double> completedUnitScenarios = List.generate(
+        units.length,
+        (i) => 0,
+      );
+
+      final progressCollection =
+          await _db
+              .collection('users')
+              .doc(_user!.uid)
+              .collection('progress')
+              .get();
+      for (final doc in progressCollection.docs) {
+        Map<String, dynamic> docData = doc.data();
+        int unitNumber = docData['unitNumber'];
+        int score = docData['feedback']['score'];
+        completedUnitScenarios[unitNumber - 1]++;
+        unitAvgScores[unitNumber - 1] += score;
+      }
+
+      for (int i = 0; i < unitAvgScores.length; i++) {
+        if (completedUnitScenarios[i] != 0) {
+          unitAvgScores[i] /= completedUnitScenarios[i];
+        }
+      }
+
+      return unitAvgScores;
+    } catch (e) {
+      print("Could not get user progress: $e");
+      throw Exception("Could not get user progress. Try again.");
     }
   }
 }

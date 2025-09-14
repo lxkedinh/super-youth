@@ -45,6 +45,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         )
         .then((feedback) {
           authProvider.updateProgress(
+            unitNumber: widget.unitNumber,
             scenario: widget.scenario,
             response: widget.userResponse,
             feedback: feedback,

@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sunny_chen_project/screens/feedback_screen.dart';
 import 'package:sunny_chen_project/screens/home_screen.dart';
 import 'package:sunny_chen_project/screens/login_screen.dart';
+import 'package:sunny_chen_project/screens/progress_screen.dart';
 import 'package:sunny_chen_project/screens/sign_up_screen.dart';
 import 'package:sunny_chen_project/screens/splash_screen.dart';
 import 'package:sunny_chen_project/screens/try_screen.dart';
@@ -15,6 +16,7 @@ final appRouter = GoRouter(
     GoRoute(path: '/', builder: (context, state) => SplashScreen()),
     GoRoute(path: '/home', builder: (context, state) => HomeScreen()),
     GoRoute(path: '/profile', builder: (context, state) => ProfileScreen()),
+    GoRoute(path: '/progress', builder: (context, state) => ProgressScreen()),
     GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
     GoRoute(path: '/signup', builder: (context, state) => SignUpScreen()),
     GoRoute(

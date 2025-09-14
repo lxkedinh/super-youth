@@ -25,6 +25,15 @@ class NavDrawer extends StatelessWidget {
             },
             child: Text("Profile", style: TextTheme.of(context).headlineMedium),
           ),
+          TextButton(
+            onPressed: () {
+              context.go('/progress');
+            },
+            child: Text(
+              "Progress",
+              style: TextTheme.of(context).headlineMedium,
+            ),
+          ),
         ],
       ),
     );
