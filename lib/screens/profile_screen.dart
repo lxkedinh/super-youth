@@ -176,19 +176,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     Text('Email: $email'),
-                    ElevatedButton(
+                    ElevatedButton.icon(
                       onPressed: () {
                         setState(() {
                           _isEditing = true;
                         });
                       },
-                      child: Text("Edit Profile"),
+                      label: Text("Edit Profile"),
+                      icon: Icon(Icons.edit),
                     ),
-                    ElevatedButton(
+                    ElevatedButton.icon(
                       onPressed: () {
                         _deleteAccount();
                       },
-                      child: Text("Delete Account"),
+                      label: Text("Delete Account"),
+                      icon: Icon(Icons.delete),
                     ),
                     ElevatedButton(
                       onPressed: () async {

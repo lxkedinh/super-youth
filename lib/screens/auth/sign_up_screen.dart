@@ -54,7 +54,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Text("Sign Up", style: TextStyle(fontSize: 40)),
                 TextFormField(
                   controller: _emailController,
-                  decoration: const InputDecoration(labelText: 'Email'),
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    prefixIcon: Icon(Icons.email),
+                  ),
                   validator: (String? email) {
                     if (email == null ||
                         !RegExp(
@@ -67,7 +70,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 TextFormField(
                   controller: _usernameController,
-                  decoration: const InputDecoration(labelText: 'Username'),
+                  decoration: const InputDecoration(
+                    labelText: 'Username',
+                    prefixIcon: Icon(Icons.person),
+                  ),
                   validator: (String? username) {
                     if (username == null ||
                         username.length < 3 ||
@@ -104,7 +110,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 TextFormField(
                   obscureText: true,
                   controller: _passwordController,
-                  decoration: const InputDecoration(labelText: 'Password'),
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                    prefixIcon: Icon(Icons.lock),
+                  ),
                   validator: (String? password) {
                     if (password == null ||
                         !RegExp(
@@ -125,6 +134,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _confirmPasswordController,
                   decoration: const InputDecoration(
                     labelText: 'Confirm Password',
+                    prefixIcon: Icon(Icons.lock),
                   ),
                   validator: (String? password) {
                     if (password != _passwordController.text) {

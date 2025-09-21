@@ -79,7 +79,7 @@ class _TryScreenState extends State<TryScreen> {
                           return null;
                         },
                       ),
-                      ElevatedButton(
+                      ElevatedButton.icon(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             context.go(
@@ -91,7 +91,9 @@ class _TryScreenState extends State<TryScreen> {
                             );
                           }
                         },
-                        child: Text("Submit"),
+                        label: Text("Submit"),
+                        icon: Icon(Icons.arrow_forward),
+                        iconAlignment: IconAlignment.end,
                       ),
                     ],
                   ),

@@ -50,9 +50,10 @@ class UnitScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              ElevatedButton(
+              ElevatedButton.icon(
                 onPressed: () {},
-                child: Text(
+                icon: Icon(Icons.book),
+                label: Text(
                   "Learn",
                   style: TextTheme.of(context).headlineSmall,
                 ),
