@@ -124,6 +124,10 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> sendResetPasswordEmail(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
+  }
+
   Future<void> updateProgress({
     required String scenario,
     required int unitNumber,

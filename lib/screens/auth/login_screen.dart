@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/auth_provider.dart';
+import '../../providers/auth_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -58,7 +58,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text("Login", style: TextStyle(fontSize: 40)),
                 TextFormField(
                   controller: _emailController,
-                  decoration: const InputDecoration(labelText: 'Email'),
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    prefixIcon: Icon(Icons.email),
+                  ),
                   validator: (String? email) {
                     if (email == null ||
                         !RegExp(
@@ -72,7 +75,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextFormField(
                   obscureText: true,
                   controller: _passwordController,
-                  decoration: const InputDecoration(labelText: 'Password'),
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                    prefixIcon: Icon(Icons.lock),
+                  ),
                   validator: (String? password) {
                     if (password == null ||
                         !RegExp(
@@ -95,6 +101,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                   },
                   child: Text("Login"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    context.go('/reset-password');
+                  },
+                  child: Text("Reset Password"),
                 ),
                 ElevatedButton(
                   onPressed: () => context.go('/signup'),

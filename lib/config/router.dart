@@ -1,13 +1,14 @@
 import 'package:go_router/go_router.dart';
+import 'package:sunny_chen_project/screens/auth/login_screen.dart';
+import 'package:sunny_chen_project/screens/auth/reset_password_screen.dart';
 import 'package:sunny_chen_project/screens/feedback_screen.dart';
 import 'package:sunny_chen_project/screens/home_screen.dart';
-import 'package:sunny_chen_project/screens/login_screen.dart';
 import 'package:sunny_chen_project/screens/progress_screen.dart';
-import 'package:sunny_chen_project/screens/sign_up_screen.dart';
 import 'package:sunny_chen_project/screens/splash_screen.dart';
 import 'package:sunny_chen_project/screens/try_screen.dart';
 import 'package:sunny_chen_project/screens/unit_screen.dart';
 
+import '../screens/auth/sign_up_screen.dart';
 import '../screens/profile_screen.dart';
 
 final appRouter = GoRouter(
@@ -19,6 +20,10 @@ final appRouter = GoRouter(
     GoRoute(path: '/progress', builder: (context, state) => ProgressScreen()),
     GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
     GoRoute(path: '/signup', builder: (context, state) => SignUpScreen()),
+    GoRoute(
+      path: '/reset-password',
+      builder: (context, state) => ResetPasswordScreen(),
+    ),
     GoRoute(
       path: '/unit/:unitNumber',
       builder: (context, state) {
