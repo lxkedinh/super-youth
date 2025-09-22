@@ -65,6 +65,8 @@ class AuthenticationProvider extends ChangeNotifier {
         'username': username,
         'firstName': firstName,
         'lastName': lastName,
+        'level': 1,
+        'xp': 0,
         'createdAt': FieldValue.serverTimestamp(),
       });
     } finally {
@@ -136,12 +138,34 @@ class AuthenticationProvider extends ChangeNotifier {
   }) async {
     if (_user == null) return;
 
+    int xpGained = 0;
+    if (feedback['score'] >= 8 && feedback['score'] <= 10) {
+      xpGained = 5;
+    } else if (feedback['score'] >= 5 && feedback['score'] <= 7) {
+      xpGained = 3;
+    }
+
+    int level = _userData!['level'];
+    int xpCost = 15 + 5 * (level - 1);
+    int newXp = _userData!['xp'] + xpGained;
+
+    if (newXp >= xpCost) {
+      level++;
+      newXp -= xpCost;
+    }
+
     try {
+      await _db.collection('users').doc(_user!.uid).update({
+        'level': level,
+        'xp': newXp,
+      });
+
       await _db.collection('users').doc(_user!.uid).collection('progress').add({
         'scenario': scenario,
         'unitNumber': unitNumber,
         'response': response,
         'feedback': feedback,
+
         'timestamp': FieldValue.serverTimestamp(),
       });
     } on Exception catch (e) {
@@ -185,6 +209,8 @@ class AuthenticationProvider extends ChangeNotifier {
     } catch (e) {
       print("Could not get user progress: $e");
       throw Exception("Could not get user progress. Try again.");
+    } finally {
+      notifyListeners();
     }
   }
 }

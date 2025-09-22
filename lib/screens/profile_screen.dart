@@ -76,6 +76,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  Widget _buildExpBar(int level, int xp) {
+    int xpCost = 15 + 5 * (level - 1);
+    double progress = xp / xpCost;
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 30),
+      child: LinearProgressIndicator(
+        value: progress,
+        color: Colors.cyan,
+        backgroundColor: ColorScheme.of(context).primary,
+      ),
+    );
+  }
+
   Widget _buildEditProfileSection() {
     return Form(
       key: _formKey,
@@ -153,18 +166,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             builder: (context, auth, _) {
               String firstName = auth.userData?['firstName'] ?? '';
               String lastName = auth.userData?['lastName'] ?? '';
-              String email = auth.userData?['email'] ?? '';
-              String username = auth.userData?['username'] ?? '';
+              int level = auth.userData?['level'];
+              int xp = auth.userData?['xp'];
 
               return Column(
                 spacing: 20,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(bottom: 40),
-                    child: Text(
-                      'Profile',
-                      style: Theme.of(context).textTheme.displayLarge,
-                    ),
+                  Text(
+                    'Profile',
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                   if (!_isEditing) ...[
                     Text(
@@ -172,10 +182,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: Theme.of(context).textTheme.headlineLarge,
                     ),
                     Text(
-                      username,
-                      style: Theme.of(context).textTheme.headlineSmall,
+                      "Level $level",
+                      style: TextTheme.of(context).headlineMedium,
                     ),
-                    Text('Email: $email'),
+                    _buildExpBar(level, xp),
                     ElevatedButton.icon(
                       onPressed: () {
                         setState(() {
